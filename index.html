@@ -510,7 +510,7 @@
 
   <script>
     /* ── Storage ── */
-    const KEY = 'dicionario_do_brow_v1';
+    const KEY = 'dicionario_do_brow_v2';
 
     function load()       { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } }
     function persist(arr) { localStorage.setItem(KEY, JSON.stringify(arr)); }
@@ -521,9 +521,11 @@
     /* Seed inicial */
     if (words.length === 0) {
       words = [
-        { id: uid(), word: 'Busão',      def: 'Qualquer coisa grande ou importante' },
-        { id: uid(), word: 'Maneiro',    def: 'Legal, bom, aprovado' },
-        { id: uid(), word: 'Tá ligado',  def: 'Entendeu? / Você sabe como é...' },
+        { id: uid(), word: 'Neves',      def: 'Ao invés' },
+        { id: uid(), word: 'Cenoura',    def: 'Reposição' },
+        { id: uid(), word: 'Ração',      def: 'Estava' },
+        { id: uid(), word: 'Bronzeado',  def: 'Browzada' },
+        { id: uid(), word: 'Aquino',     def: '🤷 Sem tradução ainda' },
       ];
       persist(words);
     }
