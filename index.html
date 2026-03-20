@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dicionário do Brow 📖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0d0d14;
+      --surface: #16161f;
+      --surface2: #1e1e2e;
+      --border: #2a2a3d;
+      --accent: #7c6aff;
+      --accent2: #ff6aab;
+      --accent-glow: rgba(124, 106, 255, 0.25);
+      --text: #e8e8f0;
+      --text-muted: #7a7a9a;
+      --red: #f87171;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem 5rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.8rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #searchInput:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    #searchInput::placeholder { color: var(--text-muted); }
+
+    /* ── FORM ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.3s;
+    }
+
+    .form-card:hover {
+      box-shadow: 0 0 28px var(--accent-glow);
+    }
+
+    .form-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .form-row input {
+      flex: 1;
+      min-width: 140px;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-row input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .form-row input::placeholder { color: var(--text-muted); }
+
+    #addBtn {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    #addBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 106, 255, 0.45);
+    }
+
+    #addBtn:active { transform: translateY(0); }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .stat-chip span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── WORD LIST ── */
+    #wordList {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .word-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .word-card:hover {
+      transform: translateX(5px);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .word-letter {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .word-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .word-term {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .word-sep {
+      display: inline-block;
+      margin: 0 0.4rem;
+      color: var(--accent2);
+      font-weight: 400;
+    }
+
+    .word-definition {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .word-actions {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .btn-icon {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .btn-icon:hover { background: var(--border); color: var(--text); }
+
+    .btn-icon.delete:hover {
+      background: rgba(248, 113, 113, 0.12);
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* ── EMPTY ── */
+    .empty {
+      text-align: center;
+      padding: 3.5rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .empty-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+    .empty h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 0.7rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.9rem;
+      color: var(--text);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9999;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── MODAL ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      width: min(430px, 92vw);
+      transform: scale(0.88);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .overlay.open .modal { transform: scale(1); }
+
+    .modal h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.3rem;
+    }
+
+    .modal-field { margin-bottom: 1rem; }
+
+    .modal-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-field input {
+      width: 100%;
+      padding: 0.72rem 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .modal-field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-secondary {
+      padding: 0.6rem 1.2rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+    .btn-primary {
+      padding: 0.6rem 1.3rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-badge">📖 Vocabulário exclusivo</div>
+    <h1>Dicionário do Brow</h1>
+    <p class="subtitle">As palavras que só ele entende — traduzidas pra você.</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Busca -->
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Buscar uma palavra..." />
+    </div>
+
+    <!-- Formulário -->
+    <div class="form-card">
+      <div class="form-title">➕ Adicionar palavra nova</div>
+      <div class="form-row">
+        <input type="text" id="wordInput" placeholder="Palavra do brow…" maxlength="60" />
+        <input type="text" id="defInput"  placeholder="Significado real…" maxlength="120" />
+        <button id="addBtn">Adicionar</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-chip" id="totalChip">Total: <span id="totalCount">0</span> palavras</div>
+      <div class="stat-chip" id="resultChip" style="display:none">
+        Encontradas: <span id="resultCount">0</span>
+      </div>
+    </div>
+
+    <!-- Lista -->
+    <div id="wordList"></div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"></div>
+
+  <!-- Modal editar -->
+  <div class="overlay" id="overlay">
+    <div class="modal">
+      <h2>✏️ Editar palavra</h2>
+      <div class="modal-field">
+        <label>Palavra do brow</label>
+        <input type="text" id="editWord" maxlength="60" />
+      </div>
+      <div class="modal-field">
+        <label>Significado</label>
+        <input type="text" id="editDef" maxlength="120" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelEdit">Cancelar</button>
+        <button class="btn-primary"   id="saveEdit">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Storage ── */
+    const KEY = 'dicionario_do_brow_v1';
+
+    function load()       { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } }
+    function persist(arr) { localStorage.setItem(KEY, JSON.stringify(arr)); }
+
+    let words = load();
+    let editingId = null;
+
+    /* Seed inicial */
+    if (words.length === 0) {
+      words = [
+        { id: uid(), word: 'Busão',      def: 'Qualquer coisa grande ou importante' },
+        { id: uid(), word: 'Maneiro',    def: 'Legal, bom, aprovado' },
+        { id: uid(), word: 'Tá ligado',  def: 'Entendeu? / Você sabe como é...' },
+      ];
+      persist(words);
+    }
+
+    function uid() { return Date.now() + Math.random(); }
+
+    /* ── Elementos ── */
+    const $  = id => document.getElementById(id);
+    const wordList   = $('wordList');
+    const searchInput= $('searchInput');
+    const wordInput  = $('wordInput');
+    const defInput   = $('defInput');
+    const totalCount = $('totalCount');
+    const resultChip = $('resultChip');
+    const resultCount= $('resultCount');
+    const overlay    = $('overlay');
+    const editWord   = $('editWord');
+    const editDef    = $('editDef');
+    const toast      = $('toast');
+
+    /* ── Render ── */
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+
+      let list = q
+        ? words.filter(w =>
+            w.word.toLowerCase().includes(q) ||
+            w.def.toLowerCase().includes(q))
+        : [...words];
+
+      list.sort((a, b) => a.word.localeCompare(b.word, 'pt-BR'));
+
+      totalCount.textContent = words.length;
+
+      if (q) {
+        resultChip.style.display = '';
+        resultCount.textContent  = list.length;
+      } else {
+        resultChip.style.display = 'none';
+      }
+
+      if (list.length === 0) {
+        wordList.innerHTML = `
+          <div class="empty">
+            <span class="empty-emoji">${q ? '🔎' : '📭'}</span>
+            <h3>${q ? 'Nenhuma palavra encontrada' : 'O dicionário tá vazio!'}</h3>
+            <p>${q ? 'Tente outro termo.' : 'Adicione a primeira palavra do brow usando o campo acima.'}</p>
+          </div>`;
+        return;
+      }
+
+      wordList.innerHTML = list.map(w => `
+        <div class="word-card" data-id="${w.id}">
+          <div class="word-letter">${esc(w.word)[0].toUpperCase()}</div>
+          <div class="word-body">
+            <div class="word-term">${esc(w.word)}</div>
+            <div class="word-definition">↳ ${esc(w.def)}</div>
+          </div>
+          <div class="word-actions">
+            <button class="btn-icon edit"   title="Editar"   data-id="${w.id}">✏️</button>
+            <button class="btn-icon delete" title="Deletar"  data-id="${w.id}">🗑️</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function esc(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ── Adicionar ── */
+    function addWord() {
+      const word = wordInput.value.trim();
+      const def  = defInput.value.trim();
+
+      if (!word || !def)
+        return showToast('⚠️ Preenche os dois campos, brow!');
+
+      if (words.some(w => w.word.toLowerCase() === word.toLowerCase()))
+        return showToast('🚨 Essa palavra já tá no dicionário!');
+
+      words.push({ id: uid(), word, def });
+      persist(words);
+      wordInput.value = defInput.value = '';
+      wordInput.focus();
+      render();
+      showToast('✅ Palavra adicionada!');
+    }
+
+    $('addBtn').addEventListener('click', addWord);
+    [wordInput, defInput].forEach(el =>
+      el.addEventListener('keydown', e => e.key === 'Enter' && addWord()));
+
+    /* ── Busca ── */
+    searchInput.addEventListener('input', render);
+
+    /* ── Editar / Deletar (delegação de evento) ── */
+    wordList.addEventListener('click', e => {
+      const btn = e.target.closest('.btn-icon');
+      if (!btn) return;
+      const id = btn.dataset.id;
+
+      if (btn.classList.contains('delete')) {
+        words = words.filter(w => String(w.id) !== id);
+        persist(words);
+        render();
+        showToast('🗑️ Palavra removida.');
+        return;
+      }
+
+      if (btn.classList.contains('edit')) {
+        const w = words.find(w => String(w.id) === id);
+        if (!w) return;
+        editingId      = w.id;
+        editWord.value = w.word;
+        editDef.value  = w.def;
+        overlay.classList.add('open');
+        setTimeout(() => editWord.focus(), 50);
+      }
+    });
+
+    /* ── Modal ── */
+    function closeModal() { overlay.classList.remove('open'); editingId = null; }
+
+    $('cancelEdit').addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => e.target === overlay && closeModal());
+    document.addEventListener('keydown', e => e.key === 'Escape' && closeModal());
+
+    $('saveEdit').addEventListener('click', () => {
+      const w   = editWord.value.trim();
+      const d   = editDef.value.trim();
+
+      if (!w || !d) return showToast('⚠️ Preenche os dois campos!');
+
+      if (words.some(x => x.word.toLowerCase() === w.toLowerCase() && x.id !== editingId))
+        return showToast('🚨 Já existe uma palavra igual!');
+
+      words = words.map(x => x.id === editingId ? { ...x, word: w, def: d } : x);
+      persist(words);
+      render();
+      closeModal();
+      showToast('✅ Palavra atualizada!');
+    });
+
+    /* ── Toast ── */
+    let toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* ── Init ── */
+    render();
+  </script>
+
+</body>
+</html>
