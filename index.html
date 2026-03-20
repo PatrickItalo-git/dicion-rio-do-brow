@@ -162,18 +162,19 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .word-letter {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fff;
+    .word-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
       flex-shrink: 0;
+      object-fit: cover;
+      background: transparent;
+      transition: transform 0.2s, filter 0.2s;
+    }
+
+    .word-card:hover .word-avatar {
+      transform: scale(1.08) rotate(-2deg);
+      filter: drop-shadow(0 0 8px var(--accent));
     }
 
     .word-body { flex: 1; min-width: 0; }
@@ -284,7 +285,7 @@
 
       wordList.innerHTML = list.map(w => `
         <div class="word-card">
-          <div class="word-letter">${esc(w.word)[0].toUpperCase()}</div>
+          <img class="word-avatar" src="brow.png" alt="brow" />
           <div class="word-body">
             <div class="word-term">${esc(w.word)}</div>
             <div class="word-definition">↳ ${esc(w.def)}</div>
