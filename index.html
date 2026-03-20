@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dicionário do Brow 📖</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -29,6 +33,10 @@
     body {
       font-family: 'Outfit', sans-serif;
       background-color: var(--bg);
+      background-image: url('spiderbrow.jpg');
+      background-repeat: repeat;
+      background-size: 260px;
+      background-blend-mode: luminosity;
       color: var(--text);
       min-height: 100vh;
       padding: 2rem 1rem 4rem;
@@ -38,6 +46,51 @@
     header {
       text-align: center;
       margin-bottom: 2.5rem;
+      position: relative;
+      padding: 2.5rem 1rem;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('spiderbrow.jpg');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(13,13,20,0.3) 0%, rgba(13,13,20,0.85) 100%);
+      z-index: 1;
+    }
+
+    header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Decoração flutuante */
+    .spiderbrow-deco {
+      position: fixed;
+      bottom: -20px;
+      right: -20px;
+      width: 180px;
+      height: 180px;
+      background-image: url('spiderbrow.jpg');
+      background-size: cover;
+      background-position: center top;
+      border-radius: 50%;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(40%);
     }
 
     .header-badge {
@@ -108,7 +161,9 @@
       box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
-    #searchInput::placeholder { color: var(--text-muted); }
+    #searchInput::placeholder {
+      color: var(--text-muted);
+    }
 
     /* ── STATS ── */
     .stats {
@@ -158,8 +213,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .word-avatar {
@@ -177,7 +239,10 @@
       filter: drop-shadow(0 0 8px var(--accent));
     }
 
-    .word-body { flex: 1; min-width: 0; }
+    .word-body {
+      flex: 1;
+      min-width: 0;
+    }
 
     .word-term {
       font-size: 1.05rem;
@@ -198,7 +263,11 @@
       color: var(--text-muted);
     }
 
-    .empty-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+    .empty-emoji {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
 
     .empty h3 {
       font-size: 1.1rem;
@@ -208,10 +277,14 @@
     }
   </style>
 </head>
+
 <body>
 
+  <!-- Decoração flutuante SpiderBrow -->
+  <div class="spiderbrow-deco"></div>
+
   <header>
-    <div class="header-badge">📖 Vocabulário exclusivo</div>
+    <div class="header-badge">📖 Vocabulário exclusivo do T.I</div>
     <h1>Dicionário do Brow</h1>
     <p class="subtitle">As palavras que só ele entende — traduzidas pra você.</p>
   </header>
@@ -240,20 +313,21 @@
   <script>
     /* ── Dados ── */
     const words = [
-      { word: 'Neves',              def: 'Ao invés' },
-      { word: 'Cenoura',            def: 'Reposição' },
-      { word: 'Ração',              def: 'Estava' },
-      { word: 'Bronzeado',          def: 'Browzada' },
-      { word: 'Aquino',             def: '🤷 Sem tradução ainda' },
+      { word: 'Neves', def: 'Ao invés' },
+      { word: 'Cenoura', def: 'Reposição' },
+      { word: 'Ração', def: 'Estava' },
+      { word: 'Bronzeado', def: 'Browzada' },
+      { word: 'Aquino', def: '🤷 Sem tradução ainda' },
       { word: 'Consegui ver pra nós', def: 'Consegue ver pra nós' },
-      { word: 'Sobi',               def: 'Subir' },
+      { word: 'Sobi', def: 'Subir' },
+      { word: 'Curita', def: 'Curitiba' },
     ].sort((a, b) => a.word.localeCompare(b.word, 'pt-BR'));
 
     /* ── Elementos ── */
-    const wordList    = document.getElementById('wordList');
+    const wordList = document.getElementById('wordList');
     const searchInput = document.getElementById('searchInput');
-    const totalCount  = document.getElementById('totalCount');
-    const resultChip  = document.getElementById('resultChip');
+    const totalCount = document.getElementById('totalCount');
+    const resultChip = document.getElementById('resultChip');
     const resultCount = document.getElementById('resultCount');
 
     /* ── Render ── */
@@ -262,15 +336,15 @@
 
       const list = q
         ? words.filter(w =>
-            w.word.toLowerCase().includes(q) ||
-            w.def.toLowerCase().includes(q))
+          w.word.toLowerCase().includes(q) ||
+          w.def.toLowerCase().includes(q))
         : [...words];
 
       totalCount.textContent = words.length;
 
       if (q) {
         resultChip.style.display = '';
-        resultCount.textContent  = list.length;
+        resultCount.textContent = list.length;
       } else {
         resultChip.style.display = 'none';
       }
@@ -296,7 +370,7 @@
     }
 
     function esc(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
     searchInput.addEventListener('input', render);
@@ -305,4 +379,5 @@
   </script>
 
 </body>
+
 </html>
